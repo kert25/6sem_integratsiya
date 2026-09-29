@@ -1,0 +1,27 @@
+$kind: http-request
+name: API-02-02 GET /joke/Programming
+description: "API-02-02. Позитивный, интеграционный риск «неверная категория»: ожидается 200 и category == Programming."
+url: "{{base_url}}/joke/Programming"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("error is false", function () {
+          pm.expect(resp.error).to.eql(false);
+      });
+      pm.test("Category is Programming", function () {
+          pm.expect(resp.category).to.eql("Programming");
+      });
+      pm.test("Response has property id", function () {
+          pm.expect(resp).to.have.property("id");
+      });
+      pm.test("id is a number", function () {
+          pm.expect(resp.id).to.be.a("number");
+      });
+    language: text/javascript
+order: 2000

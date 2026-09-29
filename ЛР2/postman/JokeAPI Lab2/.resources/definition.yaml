@@ -1,0 +1,5 @@
+$kind: collection
+description: ЛР2, вариант 9 — JokeAPI (https://v2.jokeapi.dev). Позитивные и негативные сценарии, Tests-скрипты, параметризация id.
+variables:
+  base_url: https://v2.jokeapi.dev
+  joke_id: "0"

@@ -1,0 +1,19 @@
+$kind: http-request
+name: API-02-12 POST /joke/Any
+description: "API-02-12. Негативный: недопустимый метод POST для read-only эндпоинта. Ожидается 405 Method Not Allowed. Фактически (замечание): 400 с HTML-страницей ошибки."
+url: "{{base_url}}/joke/Any"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: ""
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 405 (Method Not Allowed expected)", function () {
+          pm.response.to.have.status(405);
+      });
+      console.log("ACTUAL: status=" + pm.response.code);
+    language: text/javascript
+order: 7000

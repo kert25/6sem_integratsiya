@@ -1,0 +1,18 @@
+$kind: http-request
+description: "API-02-07. Негативный: превышение документированного максимума amount (10). Ожидается 400. Фактически (выявленная проблема): 200 и молчаливое усечение до 10 шуток."
+url: "{{base_url}}/joke/Programming?amount=11"
+method: GET
+queryParams:
+  amount: "11"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 400 (expected for amount > 10)", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("error is true", function () {
+          pm.expect(pm.response.json().error).to.eql(true);
+      });
+      console.log("ACTUAL: status=" + pm.response.code + ", amount=" + pm.response.json().amount);
+    language: text/javascript
+order: 2000

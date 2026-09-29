@@ -1,0 +1,27 @@
+$kind: http-request
+name: API-02-01 GET /joke/Any
+description: "API-02-01. Позитивный: случайная шутка любой категории. Ожидается 200, JSON-объект шутки (category, id, error=false). id сохраняется в переменную joke_id для параметризации."
+url: "{{base_url}}/joke/Any"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("error is false", function () {
+          pm.expect(resp.error).to.eql(false);
+      });
+      pm.test("Response has properties category and id", function () {
+          pm.expect(resp).to.have.property("category");
+          pm.expect(resp).to.have.property("id");
+      });
+      pm.test("id is a number", function () {
+          pm.expect(resp.id).to.be.a("number");
+      });
+
+      pm.collectionVariables.set("joke_id", resp.id);
+    language: text/javascript
+order: 1000

@@ -1,0 +1,28 @@
+$kind: http-request
+name: API-02-03 GET /joke/Programming?amount=3
+description: "API-02-03. Позитивный: параметр amount=3, ожидается 200, массив из 3 шуток категории Programming."
+url: "{{base_url}}/joke/Programming?amount=3"
+method: GET
+queryParams:
+  amount: "3"
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Amount is 3", function () {
+          pm.expect(resp.amount).to.eql(3);
+      });
+      pm.test("3 jokes returned", function () {
+          pm.expect(resp.jokes).to.have.lengthOf(3);
+      });
+      pm.test("All jokes are Programming", function () {
+          resp.jokes.forEach(function (j) {
+              pm.expect(j.category).to.eql("Programming");
+          });
+      });
+    language: text/javascript
+order: 3000

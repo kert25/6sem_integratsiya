@@ -1,0 +1,10 @@
+# Use this workspace to collaborate
+workspace:
+  id: ed877c42-7b76-42f0-87a8-15cf46db799b
+
+localResources:
+  collections:
+    - ../ЛР2/postman/JokeAPI.postman_collection.json
+    - ../ЛР2/postman/JokeAPI Lab2
+  environments:
+    - ../ЛР2/postman/JokeAPI Env.environment.yaml

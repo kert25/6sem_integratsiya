@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копирование requirements
+COPY requirements-test.txt .
+
+# Установка Python зависимостей
+RUN pip install --no-cache-dir -r requirements-test.txt
+
+# Копирование тестов
+COPY tests/ /app/tests/
+
+# Создание директории для отчетов
+RUN mkdir -p /app/reports
+
+# Команда по умолчанию (будет переопределена в docker-compose)
+CMD ["pytest", "tests/", "-v", "--html=reports/report.html", "--junitxml=reports/report.xml"]

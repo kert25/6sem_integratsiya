@@ -1,0 +1,22 @@
+$kind: http-request
+description: "API-02-09. Негативный: невалидное значение параметра blacklistFlags. Ожидается 400, error=true, additionalInfo перечисляет допустимые флаги."
+url: "{{base_url}}/joke/Programming?blacklistFlags=nsfw,notAFlag"
+method: GET
+queryParams:
+  blacklistFlags: nsfw,notAFlag
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 400", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("error is true", function () {
+          pm.expect(resp.error).to.eql(true);
+      });
+      pm.test("Response has property message", function () {
+          pm.expect(resp).to.have.property("message");
+      });
+    language: text/javascript
+order: 4000

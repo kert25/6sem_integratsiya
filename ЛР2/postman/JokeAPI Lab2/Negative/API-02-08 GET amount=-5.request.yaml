@@ -1,0 +1,18 @@
+$kind: http-request
+description: "API-02-08. Негативный: невалидное значение amount (-5, ниже минимума 1). Ожидается 400. Фактически (выявленная проблема): 200 — параметр проигнорирован, возвращена одиночная шутка."
+url: "{{base_url}}/joke/Any?amount=-5"
+method: GET
+queryParams:
+  amount: "-5"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 400 (expected for amount < 1)", function () {
+          pm.response.to.have.status(400);
+      });
+      pm.test("error is true", function () {
+          pm.expect(pm.response.json().error).to.eql(true);
+      });
+      console.log("ACTUAL: status=" + pm.response.code);
+    language: text/javascript
+order: 3000

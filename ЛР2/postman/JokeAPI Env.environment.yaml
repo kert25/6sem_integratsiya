@@ -1,0 +1,4 @@
+name: JokeAPI Env
+values:
+  - key: base_url
+    value: 'https://v2.jokeapi.dev'

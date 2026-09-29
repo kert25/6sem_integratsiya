@@ -1,0 +1,59 @@
+[
+  {"h": "Цель работы"},
+  {"p": "Получить практические навыки ручного тестирования REST API интерфейсов интеграции. Освоить работу с инструментом Postman для отправки запросов, анализа ответов и организации коллекций тестов; научиться проектировать позитивные и негативные тестовые сценарии, использовать переменные окружения и параметризацию, писать скрипты проверок (Tests) на JavaScript."},
+
+  {"h": "Описание тестового API и его интеграционных точек"},
+  {"p": "Объект тестирования — JokeAPI (вариант 9): публичный REST API случайных шуток. Базовый URL: https://v2.jokeapi.dev. Документация: https://jokeapi.dev/. API не требует авторизации, ответы возвращаются в формате JSON."},
+  {"table": {"widths": [2600, 6755], "rows": [
+    ["Интеграционная точка", "Назначение"],
+    ["GET /joke/Any", "Случайная шутка любой категории (позитивный сценарий по заданию)"],
+    ["GET /joke/Programming", "Случайная шутка категории Programming (интеграционный риск — «неверная категория»)"],
+    ["GET /info", "Метаданные API: версия, список категорий, флагов, диапазоны id"],
+    ["Параметры запросов", "amount (1–10) — количество шуток; idRange — выборка по id; blacklistFlags — фильтр флагов контента"]
+  ]}},
+  {"p": "Интеграционный риск по варианту — «неверная категория»: при интеграции клиент может передать несуществующую категорию (опечатка, устаревший список), поэтому обязательны проверки как корректной категории, так и обработки несуществующей."},
+
+  {"h": "Подготовка рабочей среды"},
+  {"p": "Установлен Postman (v12.30). Создана коллекция «JokeAPI Lab2» с группировкой запросов по типам операций: папки Positive (5 запросов) и Negative (7 запросов) — 12 тестовых сценариев. Настроено окружение (Environment) «JokeAPI Env» с переменной base_url = https://v2.jokeapi.dev, используемой во всех запросах через {{base_url}}."},
+  {"p": "Параметризация: послеResponse-скрипт запроса API-02-01 извлекает id полученной шутки и сохраняет его в переменную коллекции joke_id (pm.collectionVariables.set); следующий запрос API-02-05 использует {{joke_id}} в параметре idRange и проверяет, что возвращается шутка с тем же id. Таким образом реализована цепочка «id из ответа → следующий запрос»."},
+
+  {"pb": true},
+  {"h": "Таблица выполненных тестовых сценариев"},
+  {"p": "Все 12 сценариев выполнены в Postman; для каждого зафиксированы ожидаемый и фактический результат (код состояния, тело ответа, результаты Tests-скриптов):"},
+  {"table": {"widths": [700, 1955, 1300, 2000, 2400, 1000], "rows": [
+    ["ID", "Эндпоинт, метод", "Параметры / тело", "Ожидаемый результат", "Фактический результат", "Статус"],
+    ["API-02-01", "GET /joke/Any", "—", "200, JSON-объект шутки: error=false, category, id (число)", "200 OK; шутка с error=false; тесты 4/4; id сохранён в joke_id", "Pass"],
+    ["API-02-02", "GET /joke/Programming", "—", "200, category = Programming (риск «неверная категория»)", "200 OK, category = Programming; тесты 5/5", "Pass"],
+    ["API-02-03", "GET /joke/Programming", "amount=3", "200, массив из 3 шуток, все Programming", "200 OK, amount=3, 3 шутки Programming; тесты 4/4", "Pass"],
+    ["API-02-04", "GET /info", "—", "200, метаданные: version, список категорий", "200 OK, version 2.3.3, Programming в списке; тесты 3/3", "Pass"],
+    ["API-02-05", "GET /joke/Any", "idRange={{joke_id}}", "200, шутка с id из ответа API-02-01 (параметризация)", "200 OK, id совпадает с joke_id; тесты 2/2", "Pass"],
+    ["API-02-06", "GET /joke/FooBar", "—", "4xx, error=true, сообщение о неверной категории", "400, код 106, additionalInfo перечисляет допустимые категории; тесты 4/4", "Pass"],
+    ["API-02-07", "GET /joke/Programming", "amount=11", "400 Bad Request (превышение максимума amount=10)", "200 OK — amount молчаливо усечён до 10; тесты 0/2", "Fail"],
+    ["API-02-08", "GET /joke/Any", "amount=-5", "400 Bad Request (менее минимума amount=1)", "200 OK — одиночная шутка, параметр проигнорирован; тесты 0/2", "Fail"],
+    ["API-02-09", "GET /joke/Programming", "blacklistFlags=nsfw,notAFlag", "400, error=true, сообщение о неверном флаге", "400, код 106, additionalInfo перечисляет допустимые флаги; тесты 3/3", "Pass"],
+    ["API-02-10", "GET /joke/Programming", "idRange=999999-999999", "4xx, error=true (несуществующий id)", "400, код 106 «No matching joke found»; тесты 3/3", "Pass"],
+    ["API-02-11", "GET /nonexistent", "—", "404, JSON-тело ошибки", "404, тело — HTML-страница, а не JSON; тесты 1/2", "Pass (с замечанием)"],
+    ["API-02-12", "POST /joke/Any", "—", "405 Method Not Allowed (метод не поддерживается)", "400, HTML-страница ошибки; тесты 0/1", "Fail (с замечанием)"]
+  ]}},
+  {"p": "Итог: 8 сценариев Pass (в т. ч. один с замечанием), 3 сценария Fail — выявленные особенности валидации JokeAPI (описаны в выводах)."},
+
+  {"pb": true},
+  {"h": "Скриншоты ключевых запросов из Postman"},
+  {"p": "Ниже приведены скриншоты ключевых позитивных и негативных запросов (полное окно Postman: слева — коллекция, в центре — запрос, тесты и ответ)."},
+  {"img": "screenshots/postman_01_any_tests.png", "caption": "Рис. 1. API-02-01 GET /joke/Any: 200 OK, Test Results 4/4 (id сохранён в переменную joke_id)"},
+  {"img": "screenshots/postman_02_programming.png", "caption": "Рис. 2. API-02-02 GET /joke/Programming: 200 OK, category = Programming"},
+  {"img": "screenshots/postman_05_idrange_param.png", "caption": "Рис. 3. API-02-05 GET /joke/Any?idRange={{joke_id}}: параметризация — из ответа получена шутка с тем же id"},
+  {"img": "screenshots/postman_06_foobar_400.png", "caption": "Рис. 4. API-02-06 GET /joke/FooBar (негативный): 400, JSON с error=true и кодом 106"},
+  {"img": "screenshots/postman_07_amount11.png", "caption": "Рис. 5. API-02-07 amount=11 (негативный): 200 c усечением до 10, Test Results 0/2 — сценарий Fail"},
+  {"img": "screenshots/postman_12_post_html.png", "caption": "Рис. 6. API-02-12 POST /joke/Any (негативный): 400 Bad Request с HTML-телом вместо JSON"},
+
+  {"pb": true},
+  {"h": "Пример кода скрипта проверки (Tests)"},
+  {"p": "Позитивный сценарий API-02-01 — послеResponse-скрипт (вкладка Scripts → Post-response) с проверками по шаблону из задания и сохранением id в переменную коллекции:"},
+  {"code": "const resp = pm.response.json();\n\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"error is false\", function () {\n    pm.expect(resp.error).to.eql(false);\n});\npm.test(\"Response has properties category and id\", function () {\n    pm.expect(resp).to.have.property(\"category\");\n    pm.expect(resp).to.have.property(\"id\");\n});\npm.test(\"id is a number\", function () {\n    pm.expect(resp.id).to.be.a(\"number\");\n});\n\npm.collectionVariables.set(\"joke_id\", resp.id);"},
+  {"p": "Негативный сценарий API-02-06 — проверка структуры ошибки:"},
+  {"code": "const resp = pm.response.json();\n\npm.test(\"Status code is 400\", function () {\n    pm.response.to.have.status(400);\n});\npm.test(\"error is true\", function () {\n    pm.expect(resp.error).to.eql(true);\n});\npm.test(\"Response has property message\", function () {\n    pm.expect(resp).to.have.property(\"message\");\n});\npm.test(\"Error code is 106\", function () {\n    pm.expect(resp.code).to.eql(106);\n});"},
+
+  {"h": "Выводы"},
+  {"p": "В ходе лабораторной работы протестировано 12 интеграционных сценариев публичного REST API JokeAPI в Postman: 5 позитивных и 7 негативных. Для всех ключевых сценариев написаны Tests-скрипты (pm.response.to.have.status, pm.expect(...).to.have.property, pm.expect(...).to.be.a(\"number\")); налажены переменные окружения (base_url) и параметризация «id из ответа → следующий запрос» (joke_id → idRange). Корректность работы API по основным точкам подтверждена: валидные запросы возвращают 200 с корректной структурой JSON; интеграционный риск «неверная категория» обрабатывается корректно (400, код 106, additionalInfo со списком допустимых категорий).\nВыявлены особенности (проблемы) валидации, о которых должен знать интегрирующийся клиент: 1) превышение лимита amount (11) не отвергается — значение молчаливо усекается до 10 (API-02-07, Fail); 2) значение amount меньше минимума (-5) игнорируется и возвращается одиночная шутка (API-02-08, Fail); 3) для несуществующих путей и неподдерживаемых методов (POST) API возвращает HTML-страницу ошибки вместо JSON и код 400 вместо 405 — несогласованность формата ошибок, представляющая риск для клиентов, ожидающих JSON. Качество документации в целом хорошее (описаны параметры, лимиты, коды ошибок), однако поведение «мягкой» валидации amount и формат ошибок вне эндпоинтов /joke в ней явно не специфицированы — эти случаи следует закреплять контрактными тестами на стороне клиента."}
+]

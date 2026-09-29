@@ -1,0 +1,150 @@
+version: '3.8'
+
+services:
+  # Тестовые базы данных
+  postgres-users-test:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: users_db_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "15433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-products-test:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: products_db_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "15434:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-orders-test:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: orders_db_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "15435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Сервисы для тестирования
+  user-service-test:
+    build: ./services/user-service
+    ports:
+      - "18001:8001"
+    environment:
+      DB_HOST: postgres-users-test
+      DB_PORT: 5432
+      DB_NAME: users_db_test
+      DB_USER: test_user
+      DB_PASSWORD: test_password
+      JWT_SECRET: test-secret-key-123-test
+    depends_on:
+      postgres-users-test:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  product-service-test:
+    build: ./services/product-service
+    ports:
+      - "18002:8002"
+    environment:
+      DB_HOST: postgres-products-test
+      DB_PORT: 5432
+      DB_NAME: products_db_test
+      DB_USER: test_user
+      DB_PASSWORD: test_password
+    depends_on:
+      postgres-products-test:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  payment-mock-test:
+    build: ./services/payment-mock
+    ports:
+      - "18004:8004"
+    environment:
+      SUCCESS_RATE: 0.9
+      AVERAGE_DELAY: 0.5
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  order-service-test:
+    build: ./services/order-service
+    ports:
+      - "18003:8003"
+    environment:
+      DB_HOST: postgres-orders-test
+      DB_PORT: 5432
+      DB_NAME: orders_db_test
+      DB_USER: test_user
+      DB_PASSWORD: test_password
+      USER_SERVICE_URL: http://user-service-test:8001
+      PRODUCT_SERVICE_URL: http://product-service-test:8002
+      PAYMENT_SERVICE_URL: http://payment-mock-test:8004
+    depends_on:
+      postgres-orders-test:
+        condition: service_healthy
+      user-service-test:
+        condition: service_healthy
+      product-service-test:
+        condition: service_healthy
+      payment-mock-test:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Контейнер для запуска тестов
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./tests:/app/tests
+      - ./reports:/app/reports
+    depends_on:
+      user-service-test:
+        condition: service_healthy
+      product-service-test:
+        condition: service_healthy
+      order-service-test:
+        condition: service_healthy
+      payment-mock-test:
+        condition: service_healthy
+    environment:
+      USER_SERVICE_URL: http://user-service-test:8001
+      PRODUCT_SERVICE_URL: http://product-service-test:8002
+      ORDER_SERVICE_URL: http://order-service-test:8003
+      PAYMENT_SERVICE_URL: http://payment-mock-test:8004
+    command: ["tail", "-f", "/dev/null"]  # Ожидание команд

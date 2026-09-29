@@ -1,0 +1,20 @@
+$kind: http-request
+name: API-02-05 GET /joke/Any?idRange={{joke_id}}
+description: "API-02-05. Позитивный, параметризация: id, извлечённый из ответа API-02-01 (переменная joke_id), используется в следующем запросе через idRange. Ожидается 200 и возврат шутки с тем же id."
+url: "{{base_url}}/joke/Any?idRange={{joke_id}}"
+method: GET
+queryParams:
+  idRange: "{{joke_id}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Returned joke id equals parameterized joke_id", function () {
+          pm.expect(resp.id).to.eql(Number(pm.collectionVariables.get("joke_id")));
+      });
+    language: text/javascript
+order: 5000

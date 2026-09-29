@@ -1,0 +1,21 @@
+$kind: http-request
+name: API-02-04 GET /info
+description: "API-02-04. Позитивный: метаданные API (версия, категории, диапазоны id) — интеграционная точка для клиентов."
+url: "{{base_url}}/info"
+method: GET
+scripts:
+  - type: afterResponse
+    code: |-
+      const resp = pm.response.json();
+
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test("Response has property version", function () {
+          pm.expect(resp).to.have.property("version");
+      });
+      pm.test("Categories include Programming", function () {
+          pm.expect(resp.jokes.categories).to.include("Programming");
+      });
+    language: text/javascript
+order: 4000

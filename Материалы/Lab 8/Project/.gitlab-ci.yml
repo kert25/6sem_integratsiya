@@ -1,0 +1,110 @@
+stages:
+  - build
+  - test
+  - deploy-test
+  - report
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+
+# Сервисы для тестирования
+services:
+  - docker:dind
+
+before_script:
+  - docker --version
+  - docker-compose --version
+
+# 1. Сборка образов
+build:
+  stage: build
+  script:
+    - echo "Building Docker images..."
+    - docker-compose -f docker-compose.test.yml build
+  artifacts:
+    paths:
+      - docker-compose.test.yml
+    expire_in: 1 hour
+
+# 2. Запуск тестов
+integration-tests:
+  stage: test
+  script:
+    - echo "Starting test environment..."
+    - docker-compose -f docker-compose.test.yml up -d
+    - echo "Waiting for services to start..."
+    - sleep 30
+    
+    - echo "Checking services health..."
+    - |
+      for service in user-service product-service order-service payment-mock; do
+        echo "Checking $service..."
+        timeout 30 bash -c "until curl -f http://localhost:8001/health; do sleep 1; done"
+      done
+    
+    - echo "Running integration tests..."
+    - docker-compose -f docker-compose.test.yml exec -T test-runner pytest tests/integration/ -v --html=report.html --junitxml=report.xml
+    
+    - echo "Running contract tests..."
+    - docker-compose -f docker-compose.test.yml exec -T test-runner pytest tests/contract/ -v
+    
+    - echo "Running resilience tests..."
+    - docker-compose -f docker-compose.test.yml exec -T test-runner pytest tests/resilience/ -v
+    
+  after_script:
+    - echo "Collecting test reports..."
+    - docker-compose -f docker-compose.test.yml cp test-runner:/app/report.html ./report.html || true
+    - docker-compose -f docker-compose.test.yml cp test-runner:/app/report.xml ./report.xml || true
+    - docker-compose -f docker-compose.test.yml down
+  artifacts:
+    paths:
+      - report.html
+      - report.xml
+    expire_in: 1 week
+  coverage: '/TOTAL.*\s+(\d+\.\d+%)/'
+
+# 3. Развертывание в тестовое окружение
+deploy-test:
+  stage: deploy-test
+  script:
+    - echo "Deploying to test environment..."
+    - scp docker-compose.yml user@test-server:/app/
+    - ssh user@test-server "cd /app && docker-compose pull && docker-compose up -d"
+  environment:
+    name: test
+    url: http://test-server:8080
+  only:
+    - main
+    - develop
+
+# 4. Генерация отчетов
+generate-report:
+  stage: report
+  script:
+    - echo "Generating test report..."
+    - |
+      cat > test-summary.md << 'EOF'
+      # Отчет о тестировании
+      ## Проект: Система управления заказами
+      ## Дата: $(date +%Y-%m-%d)
+      ## Ветка: $CI_COMMIT_REF_NAME
+      
+      ### Результаты выполнения:
+      - Интеграционные тесты: выполнены
+      - Контрактные тесты: выполнены
+      - Тесты отказоустойчивости: выполнены
+      
+      ### Статистика:
+      - Время выполнения: $CI_JOB_DURATION секунд
+      - Коммит: $CI_COMMIT_SHA
+      - Автор: $CI_COMMIT_AUTHOR
+      
+      ### Ссылки:
+      - [Полный отчет HTML](report.html)
+      - [JUnit отчет](report.xml)
+      EOF
+  artifacts:
+    paths:
+      - test-summary.md
+    expire_in: 1 week
