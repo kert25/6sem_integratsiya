@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+ЛР4/api_tests/reports/
+ЛР4/api_tests/pytest_run.txt
