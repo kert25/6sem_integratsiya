@@ -1,0 +1,57 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.15, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\PC\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\PC\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР3
+configfile: pytest.ini
+testpaths: tests
+collecting ... collected 32 items
+
+tests/test_recommendations.py::test_base_case PASSED                     [  3%]
+tests/test_recommendations.py::test_child_horror_excluded PASSED         [  6%]
+tests/test_recommendations.py::test_horror_age_boundary[age-11] PASSED   [  9%]
+tests/test_recommendations.py::test_horror_age_boundary[age-12] PASSED   [ 12%]
+tests/test_recommendations.py::test_senior_drama_boost FAILED            [ 15%]
+tests/test_recommendations.py::test_drama_boost_boundary[age-60] PASSED  [ 18%]
+tests/test_recommendations.py::test_drama_boost_boundary[age-61] FAILED  [ 21%]
+tests/test_recommendations.py::test_viewed_reduction_boundary[watched-20] PASSED [ 25%]
+tests/test_recommendations.py::test_viewed_reduction_boundary[watched-21] PASSED [ 28%]
+tests/test_recommendations.py::test_viewed_range_bounds[watched-0] PASSED [ 31%]
+tests/test_recommendations.py::test_viewed_range_bounds[watched-50] PASSED [ 34%]
+tests/test_recommendations.py::test_strict_filter_high_pref PASSED       [ 37%]
+tests/test_recommendations.py::test_rating_filter_boundary[pref-8.5] FAILED [ 40%]
+tests/test_recommendations.py::test_rating_filter_boundary[pref-8.6] PASSED [ 43%]
+tests/test_recommendations.py::test_moderate_pref_no_strict_filter FAILED [ 46%]
+tests/test_recommendations.py::test_pref_zero_all_movies PASSED          [ 50%]
+tests/test_recommendations.py::test_pref_upper_bound PASSED              [ 53%]
+tests/test_recommendations.py::test_premium_adds_two PASSED              [ 56%]
+tests/test_recommendations.py::test_premium_not_cut_by_cap FAILED        [ 59%]
+tests/test_recommendations.py::test_base_cap_ten PASSED                  [ 62%]
+tests/test_recommendations.py::test_child_heavy_watcher PASSED           [ 65%]
+tests/test_recommendations.py::test_senior_heavy_watcher PASSED          [ 68%]
+tests/test_recommendations.py::test_invalid_input_rejected[age<0] FAILED [ 71%]
+tests/test_recommendations.py::test_invalid_input_rejected[age>120] FAILED [ 75%]
+tests/test_recommendations.py::test_invalid_input_rejected[watched<0] FAILED [ 78%]
+tests/test_recommendations.py::test_invalid_input_rejected[watched>50] FAILED [ 81%]
+tests/test_recommendations.py::test_invalid_input_rejected[pref<0] FAILED [ 84%]
+tests/test_recommendations.py::test_invalid_input_rejected[pref>10] FAILED [ 87%]
+tests/test_recommendations.py::test_invalid_input_rejected[invalid-genre] FAILED [ 90%]
+tests/test_recommendations.py::test_invalid_input_rejected[empty-genres] FAILED [ 93%]
+tests/test_recommendations.py::test_age_range_bounds[age-0] PASSED       [ 96%]
+tests/test_recommendations.py::test_age_range_bounds[age-120] PASSED     [100%]
+
+=========================== short test summary info ===========================
+FAILED tests/test_recommendations.py::test_senior_drama_boost - AssertionErro...
+FAILED tests/test_recommendations.py::test_drama_boost_boundary[age-61] - Ass...
+FAILED tests/test_recommendations.py::test_rating_filter_boundary[pref-8.5]
+FAILED tests/test_recommendations.py::test_moderate_pref_no_strict_filter - A...
+FAILED tests/test_recommendations.py::test_premium_not_cut_by_cap - Assertion...
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[age<0] - As...
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[age>120] - ...
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[watched<0]
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[watched>50]
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[pref<0] - A...
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[pref>10] - ...
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[invalid-genre]
+FAILED tests/test_recommendations.py::test_invalid_input_rejected[empty-genres]
+======================== 13 failed, 19 passed in 0.08s ========================
+
