@@ -23,7 +23,8 @@ class TestAuthAPI:
     @pytest.mark.parametrize("email, password, expected_error", [
         ("wrong@email.com", "password123", "Неверный email или пароль"),
         ("student@university.ru", "wrongpass", "Неверный email или пароль"),
-        ("", "password123", "Неверный формат email"),
+        # Пустой email: в /auth/login нет проверки формата (только в /auth/register) -> 401
+        ("", "password123", "Неверный email или пароль"),
         ("student@university.ru", "", "Неверный email или пароль"),
     ])
     def test_login_failure(self, auth_api, email, password, expected_error):
@@ -79,7 +80,7 @@ class TestAuthAPI:
         assert response.status_code == 401
 
         error = ErrorResponse.model_validate(response.json())
-        assert "аутентификации" in error.error.lower()
+        assert "требуется аутентификация" in error.error.lower()
 
     def test_full_auth_flow(self, auth_api, faker):
         """Полный цикл аутентификации: регистрация -> вход -> получение данных"""
