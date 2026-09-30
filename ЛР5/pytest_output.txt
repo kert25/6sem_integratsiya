@@ -1,0 +1,59 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\kirill\AppData\Local\Programs\Python\Python314\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.1.1', 'pluggy': '1.6.0'}, 'Plugins': {'allure-pytest': '2.16.2', 'Faker': '40.40.0', 'html': '4.2.0', 'metadata': '3.1.1', 'rerunfailures': '16.7', 'xdist': '3.8.0'}}
+rootdir: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР5\ui_tests
+configfile: pytest.ini
+plugins: allure-pytest-2.16.2, Faker-40.40.0, html-4.2.0, metadata-3.1.1, rerunfailures-16.7, xdist-3.8.0
+collecting ... collected 16 items
+
+tests/test_geolocation.py::TestGeolocation::test_open_geolocation_from_home PASSED [  6%]
+tests/test_geolocation.py::TestGeolocation::test_initial_prompt_text PASSED [ 12%]
+tests/test_geolocation.py::TestGeolocation::test_where_am_i_shows_mock_coordinates PASSED [ 18%]
+tests/test_geolocation.py::TestGeolocation::test_google_maps_link_contains_coordinates PASSED [ 25%]
+tests/test_inputs.py::TestInputs::test_open_inputs_from_home PASSED      [ 31%]
+tests/test_inputs.py::TestInputs::test_enter_number PASSED               [ 37%]
+tests/test_inputs.py::TestInputs::test_enter_decimal_number PASSED       [ 43%]
+tests/test_inputs.py::TestInputs::test_enter_negative_number PASSED      [ 50%]
+tests/test_inputs.py::TestInputs::test_clear_input PASSED                [ 56%]
+tests/test_inputs.py::TestInputs::test_non_numeric_input_ignored PASSED  [ 62%]
+tests/test_inputs.py::TestInputs::test_arrow_keys_change_value PASSED    [ 68%]
+tests/test_notification_messages.py::TestNotificationMessages::test_open_notification_messages_from_home PASSED [ 75%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_appears_after_click PASSED [ 81%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_text_is_known PASSED [ 87%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_can_be_closed PASSED [ 93%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_reappears_on_each_click PASSED [100%]
+
+- generated xml file: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР5\ui_tests\reports\junit_ui.xml -
+- Generated html report: file:///C:/Users/kirill/Documents/%D0%A2%D1%83%D0%BB%D0%93%D0%A3/6_%D1%81%D0%B5%D0%BC%D0%B5%D1%81%D1%82%D1%80/%D0%98%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%B8_%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/%D0%9B%D0%A05/ui_tests/reports/ui_report.html -
+======================= 16 passed in 123.60s (0:02:03) ========================
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\kirill\AppData\Local\Programs\Python\Python314\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.1.1', 'pluggy': '1.6.0'}, 'Plugins': {'allure-pytest': '2.16.2', 'Faker': '40.40.0', 'html': '4.2.0', 'metadata': '3.1.1', 'rerunfailures': '16.7', 'xdist': '3.8.0'}}
+rootdir: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР5\ui_tests
+configfile: pytest.ini
+plugins: allure-pytest-2.16.2, Faker-40.40.0, html-4.2.0, metadata-3.1.1, rerunfailures-16.7, xdist-3.8.0
+collecting ... collected 16 items
+
+tests/test_geolocation.py::TestGeolocation::test_open_geolocation_from_home PASSED [  6%]
+tests/test_geolocation.py::TestGeolocation::test_initial_prompt_text PASSED [ 12%]
+tests/test_geolocation.py::TestGeolocation::test_where_am_i_shows_mock_coordinates RERUN [ 18%]
+tests/test_geolocation.py::TestGeolocation::test_where_am_i_shows_mock_coordinates PASSED [ 18%]
+tests/test_geolocation.py::TestGeolocation::test_google_maps_link_contains_coordinates PASSED [ 25%]
+tests/test_inputs.py::TestInputs::test_open_inputs_from_home PASSED      [ 31%]
+tests/test_inputs.py::TestInputs::test_enter_number PASSED               [ 37%]
+tests/test_inputs.py::TestInputs::test_enter_decimal_number PASSED       [ 43%]
+tests/test_inputs.py::TestInputs::test_enter_negative_number PASSED      [ 50%]
+tests/test_inputs.py::TestInputs::test_clear_input PASSED                [ 56%]
+tests/test_inputs.py::TestInputs::test_non_numeric_input_ignored PASSED  [ 62%]
+tests/test_inputs.py::TestInputs::test_arrow_keys_change_value PASSED    [ 68%]
+tests/test_notification_messages.py::TestNotificationMessages::test_open_notification_messages_from_home PASSED [ 75%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_appears_after_click PASSED [ 81%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_text_is_known PASSED [ 87%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_can_be_closed PASSED [ 93%]
+tests/test_notification_messages.py::TestNotificationMessages::test_notification_reappears_on_each_click PASSED [100%]
+
+- generated xml file: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР5\ui_tests\reports\junit_ui.xml -
+- Generated html report: file:///C:/Users/kirill/Documents/%D0%A2%D1%83%D0%BB%D0%93%D0%A3/6_%D1%81%D0%B5%D0%BC%D0%B5%D1%81%D1%82%D1%80/%D0%98%D0%BD%D1%82%D0%B5%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%B8_%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/%D0%9B%D0%A05/ui_tests/reports/ui_report.html -
+=================== 16 passed, 1 rerun in 222.87s (0:03:42) ===================

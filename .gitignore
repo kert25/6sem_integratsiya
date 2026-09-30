@@ -3,3 +3,6 @@ __pycache__/
 .pytest_cache/
 ЛР4/api_tests/reports/
 ЛР4/api_tests/pytest_run.txt
+ЛР5/ui_tests/reports/
+ЛР5/ui_tests/logs/
+ЛР5/ui_tests/screenshots/
