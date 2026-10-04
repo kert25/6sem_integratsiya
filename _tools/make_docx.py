@@ -210,14 +210,16 @@ SECT_PR = ('<w:sectPr><w:footerReference w:type="default" r:id="rId2"/>'
            'w:bottom="1134" w:left="1701" w:header="708" w:footer="708" w:gutter="0"/>'
            '<w:titlePg/></w:sectPr>')
 
-def build(out, num, theme, content, workdir):
+def build(out, num, theme, content, workdir, title=True):
     def resolve(p):
         return os.path.normpath(os.path.join(workdir, p))
-    paras = [title_page(num, theme)]
-    # Шапка отчёта (вторая страница, как в образце)
-    paras.append(para(run("Лабораторная работа №%d" % num, sz=32, b=True), jc="center"))
-    paras.append(para(run("по теме «%s»" % theme, sz=32, b=True), jc="center"))
-    paras.append(para(run(" ", sz=32)))
+    paras = []
+    if title:
+        paras.append(title_page(num, theme))
+        # Шапка отчёта (вторая страница, как в образце)
+        paras.append(para(run("Лабораторная работа №%d" % num, sz=32, b=True), jc="center"))
+        paras.append(para(run("по теме «%s»" % theme, sz=32, b=True), jc="center"))
+        paras.append(para(run(" ", sz=32)))
     media, img_rels = {}, []
     rid_n = 100
     for item in content:
@@ -266,11 +268,12 @@ def main():
     ap.add_argument("--num", type=int, required=True)
     ap.add_argument("--theme", required=True)
     ap.add_argument("--content", required=True, help="JSON-файл содержимого")
+    ap.add_argument("--no-title", action="store_true", help="Создать документ без титульного листа")
     a = ap.parse_args()
     with open(a.content, encoding="utf-8-sig") as f:
         content = json.load(f)
     workdir = os.path.dirname(os.path.abspath(a.content))
-    build(a.out, a.num, a.theme, content, workdir)
+    build(a.out, a.num, a.theme, content, workdir, title=not a.no_title)
 
 if __name__ == "__main__":
     main()

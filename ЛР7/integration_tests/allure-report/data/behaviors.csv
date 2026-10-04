@@ -1,0 +1,6 @@
+"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
+"0","","0","Schools API","1","0","Schema initialization","0"
+"0","","0","Schools API","1","0","Multiple writes","0"
+"0","","0","Schools API","1","0","Read after create","0"
+"0","","0","Schools API","1","0","Create school","0"
+"0","","0","Schools API","1","0","Read schools","0"

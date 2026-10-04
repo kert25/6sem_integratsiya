@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "commit_on_completion": false,
+  "project_notes": [
+    "Вариант 9 подтверждён для всех лабораторных работ дисциплины."
+  ],
+  "labs": {
+    "6": {
+      "status": "in_progress",
+      "directory": "ЛР6",
+      "methodical_guide": "ЛР6/ЛАБОРАТОРНАЯ РАБОТА 6.docx",
+      "report_number": 6,
+      "theme": "Автоматизация тестирования мобильных приложений",
+      "variant": "9",
+      "shared_resources": [],
+      "notes": [
+        "Тестируемое приложение: Wikipedia из F-Droid, APK версии 50606 сохранён в ЛР6/downloads/wikipedia-fdroid-50606.apk.",
+        "SHA-256 APK: eba82a0f77940d8a6be5bd2e53723675a59859a6c8a51be5e50bd034fc77101f.",
+        "Для работы используется Android Virtual Device Pixel 6, Android API 35, Google Play Store image."
+      ],
+      "next_step": "Проверить отчёт и конспект, затем пройти quality gate.",
+      "commands": {
+        "appium_driver_install": "appium driver install uiautomator2",
+        "test_collection": "py -m pytest --collect-only -q",
+        "functional_check": "py -m pytest --alluredir=reports/allure"
+      },
+      "command_templates": {
+        "run_tests": "py -m pytest --alluredir=reports/allure",
+        "generate_allure_report": "allure generate reports/allure --clean -o reports/allure-html"
+      },
+      "artifacts": [
+        "ЛР6/downloads/wikipedia-fdroid-50606.apk",
+        "ЛР6/mobile_tests/",
+        "ЛР6/mobile_tests/reports/allure-html/",
+        "ЛР6/content.json",
+        "ЛР6/content_text.json",
+        "ЛР6/Отчет_ЛР6.docx",
+        "ЛР6/Отчет_ЛР6.pdf",
+        "ЛР6/text.docx",
+        "ЛР6/pytest_output.txt",
+        "ЛР6/screenshots/pytest_terminal.png"
+      ]
+    },
+    "7": {
+      "status": "completed",
+      "directory": "ЛР7",
+      "methodical_guide": "ЛР7/ЛАБОРАТОРНАЯ РАБОТА 7.docx",
+      "report_number": 7,
+      "theme": "Интеграционное тестирование веб-приложения в Docker-окружении",
+      "variant": "9",
+      "shared_resources": [],
+      "notes": [
+        "Вариант 9: Node.js CRUD Backend — https://github.com/EsankiThambawita/Dockerized-Node.js-Express-PostgreSQL-CRUD-Backend."
+      ],
+      "next_step": "ЛР7 проверена пользователем и завершена.",
+      "commands": {
+        "start_environment": "docker compose up -d --build",
+        "run_tests": "py -m pytest -v --alluredir=allure-results",
+        "generate_allure_report": "allure generate allure-results --clean -o allure-report",
+        "stop_environment": "docker compose down"
+      },
+      "command_templates": {
+        "allure_preview": "allure open allure-report"
+      },
+      "artifacts": [
+        "ЛР7/ЛАБОРАТОРНАЯ РАБОТА 7.docx",
+        "ЛР7/project/",
+        "ЛР7/integration_tests/",
+        "ЛР7/content.json",
+        "ЛР7/content_text.json",
+        "ЛР7/screenshots/docker_status.png",
+        "ЛР7/screenshots/pytest_results.png",
+        "ЛР7/screenshots/allure_summary.png",
+        "ЛР7/Отчет_ЛР7.docx",
+        "ЛР7/Отчет_ЛР7.pdf",
+        "ЛР7/text.docx",
+        "ЛР7/quality_gate.json"
+      ],
+      "verification": {
+        "status": "passed",
+        "checked_at": "2026-10-04T00:00:00Z",
+        "checks": [
+          "pytest_5_passed",
+          "allure_report",
+          "docx_structure",
+          "pdf_text",
+          "report_references",
+          "quality_gate"
+        ],
+        "warnings": []
+      }
+    }
+  }
+}

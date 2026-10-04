@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","10","test_setup_endpoint_created_schools_table","","2026-10-04","passed","2026-10-04","","test_schools_integration","",""
+"","263","test_multiple_api_requests_persist_all_rows","","2026-10-04","passed","2026-10-04","","test_schools_integration","",""
+"","111","test_created_school_is_returned_by_get","","2026-10-04","passed","2026-10-04","","test_schools_integration","",""
+"","114","test_post_persists_school_in_postgresql","","2026-10-04","passed","2026-10-04","","test_schools_integration","",""
+"","37","test_get_returns_empty_list_for_clean_database","","2026-10-04","passed","2026-10-04","","test_schools_integration","",""

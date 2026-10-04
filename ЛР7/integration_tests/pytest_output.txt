@@ -1,0 +1,15 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\kirill\AppData\Local\Programs\Python\Python314\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.1.1', 'pluggy': '1.6.0'}, 'Plugins': {'allure-pytest': '2.16.2', 'Faker': '40.40.0', 'html': '4.2.0', 'metadata': '3.1.1', 'rerunfailures': '16.7', 'xdist': '3.8.0'}}
+rootdir: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР7\integration_tests
+plugins: allure-pytest-2.16.2, Faker-40.40.0, html-4.2.0, metadata-3.1.1, rerunfailures-16.7, xdist-3.8.0
+collecting ... collected 5 items
+
+test_schools_integration.py::test_setup_endpoint_created_schools_table PASSED [ 20%]
+test_schools_integration.py::test_get_returns_empty_list_for_clean_database PASSED [ 40%]
+test_schools_integration.py::test_post_persists_school_in_postgresql PASSED [ 60%]
+test_schools_integration.py::test_created_school_is_returned_by_get PASSED [ 80%]
+test_schools_integration.py::test_multiple_api_requests_persist_all_rows PASSED [100%]
+
+============================== 5 passed in 0.82s ==============================

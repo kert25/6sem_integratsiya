@@ -1,0 +1,15 @@
+ Image project-app Building 
+Dockerfile:1
+
+--------------------
+
+   1 | >>> FROM node:22
+
+   2 |     
+
+   3 |     WORKDIR /usr/src/app
+
+--------------------
+
+failed to solve: node:22: failed to resolve source metadata for docker.io/library/node:22: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/22": dialing registry-1.docker.io:443 container via direct connection because Docker Desktop has no HTTPS proxy: connecting to registry-1.docker.io:443: dial tcp: lookup registry-1.docker.io: no such host
+

@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: user123
+      POSTGRES_DB: db123
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user123 -d db123"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    ports:
+      - "13000:3000"
+    depends_on:
+      db:
+        condition: service_healthy

@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\kirill\AppData\Local\Programs\Python\Python314\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.14.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.1.1', 'pluggy': '1.6.0'}, 'Plugins': {'allure-pytest': '2.16.2', 'Faker': '40.40.0', 'html': '4.2.0', 'metadata': '3.1.1', 'rerunfailures': '16.7', 'xdist': '3.8.0'}}
+rootdir: C:\Users\kirill\Documents\ТулГУ\6_семестр\Интеграция_и_тестирование\ЛР6\mobile_tests
+configfile: pytest.ini
+testpaths: tests
+plugins: allure-pytest-2.16.2, Faker-40.40.0, html-4.2.0, metadata-3.1.1, rerunfailures-16.7, xdist-3.8.0
+collecting ... collected 2 items
+
+tests/test_article_navigation.py::TestSearchNavigation::test_clear_search_query PASSED [ 50%]
+tests/test_search.py::TestWikipediaSearch::test_search_query_is_entered PASSED [100%]
+
+============================= 2 passed in 48.45s ==============================

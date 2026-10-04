@@ -1,0 +1,13 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 689B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 171B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/node:22
+#3 ERROR: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/22": dialing registry-1.docker.io:443 container via direct connection because Docker Desktop has no HTTPS proxy: connecting to registry-1.docker.io:443: dial tcp: lookup registry-1.docker.io: no such host
+------
+ > [internal] load metadata for docker.io/library/node:22:
+------

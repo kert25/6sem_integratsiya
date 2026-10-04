@@ -1,0 +1,31 @@
+{
+  "schema_version": 2,
+  "lab": 7,
+  "report_number": 7,
+  "status": "passed",
+  "checked_at": "2026-10-04T12:23:56Z",
+  "checks": [
+    "content_references",
+    "artifacts",
+    "report_docx",
+    "report_pdf",
+    "text_docx"
+  ],
+  "files": [
+    "ЛР7/Отчет_ЛР7.docx",
+    "ЛР7/Отчет_ЛР7.pdf",
+    "ЛР7/text.docx"
+  ],
+  "sha256": {
+    "_context.json": "43df7acdaf78d15e7a830acd4f4cd46ac92dde9ec66386b42d87a4449d5c03b4",
+    "ЛР7/content.json": "4229d81edb9f6f67a51a28f198f9e436a54c325c7e7c84cd217af93fe6021f51",
+    "ЛР7/content_text.json": "fbf69059140deebf5c3d9a5a3c82ad1877ed94e985c2fb88d8c8b068acf73292",
+    "ЛР7/screenshots/allure_summary.png": "d94cb84ccef1d47c23620080022af2b87ba8024a372b14e4d0bdf8c9ae9a9d9f",
+    "ЛР7/screenshots/docker_status.png": "9cd9bb911f66adb5d277c0e0fa2209fbafd046ee93a90df54795555d2c58e64a",
+    "ЛР7/screenshots/pytest_results.png": "59ab7d6cf854df6e803e3289b5f5e3248a96d049b5614df7b8085e1e507695ac",
+    "ЛР7/text.docx": "8e2925bef7dce7f52a5f0adb220ecff340382f94c769f213df44f89be3ddf910",
+    "ЛР7/ЛАБОРАТОРНАЯ РАБОТА 7.docx": "d1de49ec42f010f940255ed41170229e4ffac567e48052b4b17eab0c277aaf0a",
+    "ЛР7/Отчет_ЛР7.docx": "d4783b57e6657777accfaa55f07f5f897d96681ad595b78918d52ab5589b6c1f",
+    "ЛР7/Отчет_ЛР7.pdf": "30f1f85254a2654f1736ec4211db38ef334b6561ab2f483d116da656351f6888"
+  }
+}

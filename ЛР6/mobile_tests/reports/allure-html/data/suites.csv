@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","23782","TC-WIKI-01: поиск отображает релевантный результат","tests","2026-10-04","broken","2026-10-04","TestWikipediaSearch","test_search","",""
+"","24252","TC-WIKI-02: результат поиска открывает статью","tests","2026-10-04","broken","2026-10-04","TestArticleNavigation","test_article_navigation","",""
+"","9669","TC-WIKI-01: поисковый запрос вводится в поле Wikipedia","tests","2026-10-04","passed","2026-10-04","TestWikipediaSearch","test_search","",""
+"","11234","TC-WIKI-02: введённый запрос можно очистить","tests","2026-10-04","passed","2026-10-04","TestSearchNavigation","test_article_navigation","",""
